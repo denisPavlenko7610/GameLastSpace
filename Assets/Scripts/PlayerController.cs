@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
             isJump = false;
             _animator.SetBool("IsJump", false);
         }
+
+        
     }
 
     void FixedUpdate()
