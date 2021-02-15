@@ -30,27 +30,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             isJump = true;
+            _animator.SetBool("IsJump", true);
+            JumpPlayer();
         }
         else
         {
             isJump = false;
+            _animator.SetBool("IsJump", false);
         }
     }
 
     void FixedUpdate()
     {
         MovePlayer();
-
-        if (isJump)
-        {
-            _animator.SetBool("IsJump", true);
-            JumpPlayer();
-        }
-        else
-        {
-            _animator.SetBool("IsJump", false);
-        }
-        
     }
 
     private void JumpPlayer()
