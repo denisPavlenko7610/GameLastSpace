@@ -24,9 +24,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        CheckSpeedAnimation();
+
+        CheckJumpAnimation();
+
+        CheckAttackAnimation();
+        
+        CheckBlockAnimation();
+        
+    }
+
+    private void CheckSpeedAnimation()
+    {
         horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
         _animator.SetFloat("Speed", math.abs(horizontalMove));
-        
+    }
+
+    private void CheckJumpAnimation()
+    {
         if (Input.GetButtonDown("Jump"))
         {
             isJump = true;
@@ -38,8 +53,30 @@ public class PlayerController : MonoBehaviour
             isJump = false;
             _animator.SetBool("IsJump", false);
         }
+    }
 
-        
+    private void CheckAttackAnimation()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _animator.SetBool("IsAttack", true);
+        }
+        else
+        {
+            _animator.SetBool("IsAttack", false);
+        }
+    }
+
+    private void CheckBlockAnimation()
+    {
+        if (Input.GetButton("Fire2"))
+        {
+            _animator.SetBool("IsBlock", true);
+        }
+        else
+        {
+            _animator.SetBool("IsBlock", false);
+        }
     }
 
     void FixedUpdate()
