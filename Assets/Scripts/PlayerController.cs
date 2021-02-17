@@ -7,58 +7,66 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private int speed = 0;
+    [SerializeField] private float jumpForce = 150f;
 
+
+    //Private fields
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    private float horizontalMove;
-    [SerializeField] private float jumpForce = 150f;
-    private bool isJump = false;
+    private float _horizontalMove;
+    private bool _isJump = false;
+    
+    private AudioSource _swordAttack;
+    private AudioSource _swordBlock;
 
     void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _swordAttack = GetComponent<AudioSource>();
+        _swordBlock = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
-        CheckSpeedAnimation();
+        CheckSpeed();
 
-        CheckJumpAnimation();
+        CheckJump();
 
-        CheckAttackAnimation();
+        CheckAttack();
         
-        CheckBlockAnimation();
+        CheckBlock();
         
     }
 
-    private void CheckSpeedAnimation()
+    private void CheckSpeed()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
-        _animator.SetFloat("Speed", math.abs(horizontalMove));
+        _horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
+        _animator.SetFloat("Speed", math.abs(_horizontalMove));
     }
 
-    private void CheckJumpAnimation()
+    private void CheckJump()
     {
         if (Input.GetButtonDown("Jump"))
         {
-            isJump = true;
+            _isJump = true;
             _animator.SetBool("IsJump", true);
             JumpPlayer();
         }
         else
         {
-            isJump = false;
+            _isJump = false;
             _animator.SetBool("IsJump", false);
         }
     }
 
-    private void CheckAttackAnimation()
+    private void CheckAttack()
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            _swordAttack.Play();
             _animator.SetBool("IsAttack", true);
         }
         else
@@ -67,10 +75,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CheckBlockAnimation()
+    private void CheckBlock()
     {
         if (Input.GetButton("Fire2"))
         {
+            _swordBlock.Play();
             _animator.SetBool("IsBlock", true);
         }
         else
@@ -87,20 +96,20 @@ public class PlayerController : MonoBehaviour
     private void JumpPlayer()
     {
         _rigidbody2D.AddForce(transform.up * jumpForce);
-        isJump = false;
+        _isJump = false;
     }
 
     private void MovePlayer()
     {
-        if (horizontalMove > 0)
+        if (_horizontalMove > 0)
         {
             _spriteRenderer.flipX = false;
         }
-        else if (horizontalMove < 0)
+        else if (_horizontalMove < 0)
         {
             _spriteRenderer.flipX = true;
         }
 
-        _rigidbody2D.velocity = new Vector2(horizontalMove * Time.fixedDeltaTime, _rigidbody2D.velocity.y);
+        _rigidbody2D.velocity = new Vector2(_horizontalMove * Time.fixedDeltaTime, _rigidbody2D.velocity.y);
     }
 }
