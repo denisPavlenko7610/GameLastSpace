@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     private bool _isJump = false;
     
     private AudioSource _swordAttack;
-    private AudioSource _swordBlock;
 
     void Awake()
     {
@@ -26,7 +25,6 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _swordAttack = GetComponent<AudioSource>();
-        _swordBlock = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -79,7 +77,6 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButton("Fire2"))
         {
-            _swordBlock.Play();
             _animator.SetBool("IsBlock", true);
         }
         else
