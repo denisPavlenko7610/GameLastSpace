@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 150f;
 
 
+
     //Private fields
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
@@ -17,19 +18,19 @@ public class PlayerController : MonoBehaviour
     private float _horizontalMove;
     private bool _isJump = false;
     
-    private AudioSource _swordAttack;
+    private AudioSource _audioSource;
 
     void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _swordAttack = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
-        CheckSpeed();
+        CheckMove();
 
         CheckJump();
 
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void CheckSpeed()
+    private void CheckMove()
     {
         _horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
         _animator.SetFloat("Speed", math.abs(_horizontalMove));
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            _swordAttack.Play();
+            _audioSource.Play();
             _animator.SetBool("IsAttack", true);
         }
         else

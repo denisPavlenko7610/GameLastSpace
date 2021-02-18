@@ -9,6 +9,8 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject gameOverPanel;
+    
+    private bool isPaused = false;
 
     private void Awake()
     {
@@ -23,13 +25,22 @@ public class SceneLoader : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ShowPause();
+            if (isPaused == true)
+            {
+                isPaused = false;
+            }
+            else
+            {
+                isPaused = true;
+            }
+            
+            ShowPause(isPaused);
         }
     }
 
-    public void ShowPause()
+    public void ShowPause(bool isPause)
     {
-        pausePanel.SetActive(true);
+        pausePanel.SetActive(isPause);
     }
     
     
