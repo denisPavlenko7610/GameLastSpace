@@ -15,6 +15,7 @@ public class MusicVolume : MonoBehaviour
     private void Start()
     {
         _musicSlider.onValueChanged.AddListener (delegate {ChangeMusicVolume ();});
+        _effectsSlider.onValueChanged.AddListener (delegate {ChangeEffectsVolume ();});
     }
 
 
@@ -23,7 +24,7 @@ public class MusicVolume : MonoBehaviour
         _mixer.audioMixer.SetFloat("MasterVolume", Mathf.Lerp(-80, 0, _musicSlider.value));
     }
     
-    public void ChangeEffectsVolume(float volume)
+    public void ChangeEffectsVolume()
     {
         _mixer.audioMixer.SetFloat("EffectsVolume", Mathf.Lerp(-80, 0, _effectsSlider.value));
     }
