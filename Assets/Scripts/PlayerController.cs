@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int speed = 0;
     [SerializeField] private float jumpForce = 150f;
 
-
-
     //Private fields
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
