@@ -6,7 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class DeadthZone : MonoBehaviour
 {
+    [SerializeField] private GameObject gameOverScreen;
     private Animator _animator;
+
+    private void Start()
+    {
+        gameOverScreen.SetActive(false);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -14,14 +21,10 @@ public class DeadthZone : MonoBehaviour
             _animator = other.GetComponent<Animator>();
             _animator.SetBool("IsDie", true);
 
-            StartCoroutine(Wait());
+            gameOverScreen.SetActive(true);
         }
 
     }
     
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(1);
-    }
+    
 }
