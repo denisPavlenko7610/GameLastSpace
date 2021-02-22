@@ -9,7 +9,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int speed = 0;
     [SerializeField] private float jumpForce = 150f;
 
-    //Private fields
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform groundCheck;
+    
+    bool isGrounded = false;
+
+//Private fields
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
@@ -28,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        CheckIsGround();
+        
         CheckMove();
 
         CheckJump();
@@ -38,6 +45,11 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void CheckIsGround()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.15f, groundLayer);
+    }
+
     private void CheckMove()
     {
         _horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
@@ -46,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckJump()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             _isJump = true;
             _animator.SetBool("IsJump", true);
