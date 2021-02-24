@@ -11,7 +11,6 @@ public class DeadthZone : MonoBehaviour
 
     private void Start()
     {
-        gameOverScreen.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
