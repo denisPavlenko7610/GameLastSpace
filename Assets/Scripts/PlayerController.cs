@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private int speed = 0;
+    public int speed = 0;
     [SerializeField] private float jumpForce = 150f;
 
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
-    
+
     bool isGrounded = false;
 
 //Private fields
@@ -19,8 +19,9 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
     private float _horizontalMove;
+    private float _verticalMove;
     private bool _isJump = false;
-    
+
     private AudioSource _audioSource;
 
     void Awake()
@@ -34,15 +35,31 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckIsGround();
-        
+
         CheckMove();
 
         CheckJump();
 
         CheckAttack();
-        
+
         CheckBlock();
-        
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Ladder"))
+        {
+            _rigidbody2D.gravityScale = 0;
+            Climb();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Ladder"))
+        {
+            _rigidbody2D.gravityScale = 3;
+        }
     }
 
     private void CheckIsGround()
@@ -119,5 +136,12 @@ public class PlayerController : MonoBehaviour
         }
 
         _rigidbody2D.velocity = new Vector2(_horizontalMove * Time.fixedDeltaTime, _rigidbody2D.velocity.y);
+    }
+
+    private void Climb()
+    {
+        _verticalMove = Input.GetAxisRaw("Vertical");
+        
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _verticalMove * speed * Time.deltaTime);
     }
 }
