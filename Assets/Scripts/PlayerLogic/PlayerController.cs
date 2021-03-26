@@ -1,25 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public int speed = 0;
+    [Header("Player parameters")] public int speed = 0;
     [SerializeField] private float jumpForce = 150f;
 
-    [SerializeField] private LayerMask groundLayer;
+    [Header("Ground check")] [SerializeField]
+    private LayerMask groundLayer;
+
     [SerializeField] private Transform groundCheck;
 
-    private bool isGrounded = false;
+    [Header("Joystick controller")] [SerializeField]
+    JoystickButton _jumpButton;
 
+    protected Joystick _joystick;
+
+    private bool isGrounded = false;
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
     private float _horizontalMove;
     private float _verticalMove;
-    private bool _isJump = false;
 
     private AudioSource _audioSource;
 
@@ -31,6 +35,11 @@ public class PlayerController : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        _joystick = FindObjectOfType<Joystick>();
+    }
+
     private void Update()
     {
         CheckIsGround();
@@ -40,8 +49,6 @@ public class PlayerController : MonoBehaviour
         CheckJump();
 
         CheckAttack();
-
-        CheckBlock();
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -49,7 +56,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Ladder"))
         {
             _rigidbody2D.gravityScale = 0;
-            Climb();
+            ClimbOnLadder();
         }
     }
 
@@ -68,21 +75,30 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMove()
     {
-        _horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
-        _animator.SetFloat("Speed", math.abs(_horizontalMove));
+        _horizontalMove = Input.GetAxisRaw("Horizontal");
+        if (math.abs(_horizontalMove) > 0)
+        {
+            _animator.SetFloat("Speed", math.abs(_horizontalMove));
+        }
+        else if (math.abs(_joystick.Horizontal) > 0)
+        {
+            _animator.SetFloat("Speed", math.abs(_joystick.Horizontal));
+        }
+        else
+        {
+            _animator.SetFloat("Speed", 0);
+        }
     }
 
     private void CheckJump()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded || _jumpButton.pressed && isGrounded)
         {
-            _isJump = true;
             _animator.SetBool("IsJump", true);
             JumpPlayer();
         }
         else
         {
-            _isJump = false;
             _animator.SetBool("IsJump", false);
         }
     }
@@ -91,24 +107,18 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            //Ignore click through UI
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             _audioSource.Play();
             _animator.SetBool("IsAttack", true);
         }
         else
         {
             _animator.SetBool("IsAttack", false);
-        }
-    }
-
-    private void CheckBlock()
-    {
-        if (Input.GetButton("Fire2"))
-        {
-            _animator.SetBool("IsBlock", true);
-        }
-        else
-        {
-            _animator.SetBool("IsBlock", false);
         }
     }
 
@@ -119,28 +129,37 @@ public class PlayerController : MonoBehaviour
 
     private void JumpPlayer()
     {
-        _rigidbody2D.AddForce(transform.up * jumpForce);
-        _isJump = false;
+        if (_jumpButton.pressed)
+        {
+            _rigidbody2D.AddForce(transform.up * (jumpForce / 3));
+        }
+        else
+        {
+            _rigidbody2D.AddForce(transform.up * jumpForce);
+        }
     }
 
     private void MovePlayer()
     {
-        if (_horizontalMove > 0)
+        if (_horizontalMove > 0 || _joystick.Horizontal > 0)
         {
             _spriteRenderer.flipX = false;
         }
-        else if (_horizontalMove < 0)
+        else if (_horizontalMove < 0 || _joystick.Horizontal < 0)
         {
             _spriteRenderer.flipX = true;
         }
 
-        _rigidbody2D.velocity = new Vector2(_horizontalMove * Time.fixedDeltaTime, _rigidbody2D.velocity.y);
+        _rigidbody2D.velocity =
+            new Vector2(_horizontalMove * speed * Time.fixedDeltaTime + _joystick.Horizontal * speed * Time.deltaTime,
+                _rigidbody2D.velocity.y);
     }
 
-    private void Climb()
+    private void ClimbOnLadder()
     {
         _verticalMove = Input.GetAxisRaw("Vertical");
 
-        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _verticalMove * speed * Time.deltaTime);
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x,
+            _verticalMove * speed * Time.deltaTime + _joystick.Vertical * speed * Time.deltaTime);
     }
 }

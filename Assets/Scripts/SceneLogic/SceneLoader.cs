@@ -1,20 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject gameOverPanel;
-    
+
     private bool isPaused = false;
 
     private void Awake()
     {
-        if (pausePanel && gameOverPanel )
+        if (pausePanel && gameOverPanel)
         {
             pausePanel.SetActive(false);
             gameOverPanel.SetActive(false);
@@ -33,7 +29,7 @@ public class SceneLoader : MonoBehaviour
             {
                 isPaused = true;
             }
-            
+
             ShowPause(isPaused);
         }
     }
@@ -42,8 +38,8 @@ public class SceneLoader : MonoBehaviour
     {
         pausePanel.SetActive(isPause);
     }
-    
-    
+
+
     public void StartGame()
     {
         SceneManager.LoadScene(1);
