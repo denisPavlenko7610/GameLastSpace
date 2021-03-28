@@ -33,10 +33,6 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
-    }
-
-    private void Start()
-    {
         _joystick = FindObjectOfType<Joystick>();
     }
 
