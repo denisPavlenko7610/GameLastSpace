@@ -316,6 +316,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 1661509650}
+  _jumpButton: {fileID: 0}
 --- !u!1 &4444114005151883660
 GameObject:
   m_ObjectHideFlags: 0
