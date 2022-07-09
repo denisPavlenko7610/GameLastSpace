@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class JoystickButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
+namespace PlayerLogic
 {
-    [HideInInspector] public bool pressed;
-
-    public void OnPointerUp(PointerEventData eventData)
+    public class JoystickButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
-        pressed = false;
-    }
+        [HideInInspector] public bool pressed;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        pressed = true;
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            pressed = false;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            pressed = true;
+        }
     }
 }

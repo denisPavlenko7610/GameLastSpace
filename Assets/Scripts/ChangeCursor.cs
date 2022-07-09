@@ -9,13 +9,7 @@ public class ChangeCursor : MonoBehaviour
         Cursor.SetCursor(cursorDefault, Vector2.zero, CursorMode.ForceSoftware);
     }
 
-    private void OnMouseEnter()
-    {
-        Cursor.SetCursor(cursorChanged, Vector2.zero, CursorMode.ForceSoftware);
-    }
+    private void OnMouseEnter() => Cursor.SetCursor(cursorChanged, Vector2.zero, CursorMode.ForceSoftware);
 
-    private void OnMouseExit()
-    {
-        Cursor.SetCursor(cursorDefault, Vector2.zero, CursorMode.ForceSoftware);
-    }
+    private void OnMouseExit() => Cursor.SetCursor(cursorDefault, Vector2.zero, CursorMode.ForceSoftware);
 }

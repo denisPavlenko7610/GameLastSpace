@@ -132,6 +132,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -141,8 +142,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 0
     wrapV: 0
     wrapW: 0
@@ -988,6 +989,43 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      TX Tileset Ground B: 21300008
+      TX Tileset Ground BR: 21300006
+      TX Tileset Ground Col B: 21300032
+      TX Tileset Ground BL: 21300010
+      TX Tileset Ground L: 21300016
+      TX Tileset Ground C TL: 21300048
+      TX Tileset Ground Slope X2 L 1: 21300054
+      TX Tileset Ground Slope X1 T R: 21300052
+      TX Tileset Ground Slope X2 L 4: 21300030
+      TX Tileset Ground Slope X2 L 2: 21300062
+      TX Tileset Ground Slope X1 T L: 21300050
+      TX Tileset Ground Slope X1 B R: 21300060
+      TX Tileset Ground C BL: 21300042
+      TX Tileset Ground Row R: 21300022
+      TX Tileset Ground C R: 21300038
+      TX Tileset Ground C L: 21300036
+      TX Tileset Ground C TR: 21300046
+      TX Tileset Ground M: 21300012
+      TX Tileset Ground R: 21300014
+      TX Tileset Ground C T: 21300034
+      TX Tileset Ground Col M: 21300028
+      TX Tileset Ground C B: 21300040
+      TX Tileset Ground C BR: 21300044
+      TX Tileset Ground Slope X2 R 1: 21300056
+      TX Tileset Ground Row L: 21300018
+      TX Tileset Ground Slope X2 R 4: 21300070
+      TX Tileset Ground Slope X1 B L: 21300058
+      TX Tileset Ground Slope X2 R 3: 21300068
+      TX Tileset Ground S: 21300024
+      TX Tileset Ground T: 21300002
+      TX Tileset Ground TR: 21300004
+      TX Tileset Ground Col T: 21300026
+      TX Tileset Ground Slope X2 L 3: 21300064
+      TX Tileset Ground TL: 21300000
+      TX Tileset Ground Slope X2 R 2: 21300066
+      TX Tileset Ground Row M: 21300020
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
