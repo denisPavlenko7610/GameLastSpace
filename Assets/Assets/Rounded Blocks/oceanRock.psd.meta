@@ -51,6 +51,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -59,9 +60,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -316,6 +317,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      oceanRock_4: 5976573268089222242
+      oceanRock_6: -1705743094570150387
+      oceanRock_5: 3901933079529202038
+      oceanRock_2: 8855644499329362335
+      oceanRock_8: -1529011940532690813
+      oceanRock_0: -7360260967069774542
+      oceanRock_1: 684059112298149343
+      oceanRock_7: 6763845867427869477
+      oceanRock_3: -6321073037201615564
   spritePackingTag: 
   pSDRemoveMatte: 1
   pSDShowRemoveMatteOption: 1

@@ -1,74 +1,79 @@
+using PlayerLogic;
 using UnityEngine;
 
-public class MushroomController : MonoBehaviour
+namespace Monsters
 {
-    [SerializeField] private PlayerController _playerController;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float chasingRange;
-    [SerializeField] private float moveSpeed;
-
-    private Animator _animator;
-    private Rigidbody2D _rigidbody2D;
-    private SpriteRenderer _spriteRenderer;
-
-    private Vector2 directionToPlayer;
-
-    void Start()
+    public class MushroomController : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        [SerializeField] private PlayerController _playerController;
+        [SerializeField] private float _attackRange = 7f;
+        [SerializeField] private float _chasingRange = 20f;
+        [SerializeField] private float _moveSpeed;
 
-    void Update()
-    {
-        ChooseState();
-    }
+        private Animator _animator;
+        private Rigidbody2D _rigidbody2D;
+        private SpriteRenderer _spriteRenderer;
 
-    private void ChooseState()
-    {
-        float distanceToPlayer = Vector2.Distance(transform.position, _playerController.transform.position);
+        private Vector2 directionToPlayer;
+        string _runAnimation = "Run";
 
-        if (distanceToPlayer < attackRange)
+        void Start()
         {
-            Attack();
-        }
-        else if (distanceToPlayer > attackRange && distanceToPlayer < chasingRange)
-        {
-            ChasingPlayer();
-        }
-        else
-        {
-            Idle();
-        }
-    }
-
-    void ChasingPlayer()
-    {
-        if (transform.position.x < _playerController.transform.position.x)
-        {
-            directionToPlayer = _playerController.transform.position - transform.position;
-            _rigidbody2D.velocity = new Vector2(directionToPlayer.x + moveSpeed, directionToPlayer.y);
-            _spriteRenderer.flipX = false;
-        }
-        else
-        {
-            directionToPlayer = _playerController.transform.position - transform.position;
-            _rigidbody2D.velocity = new Vector2(directionToPlayer.x - moveSpeed, directionToPlayer.y);
-            _spriteRenderer.flipX = true;
+            _animator = GetComponent<Animator>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        _animator.Play("Run");
-    }
+        void Update()
+        {
+            ChooseState();
+        }
 
-    void Idle()
-    {
-        _rigidbody2D.velocity = new Vector2(0, 0);
-        _animator.Play("Idle");
-    }
+        private void ChooseState()
+        {
+            float distanceToPlayer = Vector2.Distance(transform.position, _playerController.transform.position);
 
-    void Attack()
-    {
-        _animator.Play("Attack");
+            if (distanceToPlayer < _attackRange)
+            {
+                Attack();
+            }
+            else if (distanceToPlayer > _attackRange && distanceToPlayer < _chasingRange)
+            {
+                ChasingPlayer();
+            }
+            else
+            {
+                Idle();
+            }
+        }
+
+        void ChasingPlayer()
+        {
+            if (transform.position.x < _playerController.transform.position.x)
+            {
+                directionToPlayer = _playerController.transform.position - transform.position;
+                _rigidbody2D.velocity = new Vector2(directionToPlayer.x + _moveSpeed, directionToPlayer.y);
+                _spriteRenderer.flipX = false;
+            }
+            else
+            {
+                directionToPlayer = _playerController.transform.position - transform.position;
+                _rigidbody2D.velocity = new Vector2(directionToPlayer.x - _moveSpeed, directionToPlayer.y);
+                _spriteRenderer.flipX = true;
+            }
+
+            _animator.Play(_runAnimation);
+        }
+
+        void Idle()
+        {
+            _rigidbody2D.velocity = new Vector2(0, 0);
+            _animator.Play("Idle");
+        }
+
+        void Attack()
+        {
+            _animator.Play("Attack");
+        }
     }
 }
