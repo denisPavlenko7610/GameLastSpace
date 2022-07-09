@@ -1,6 +1,4 @@
 # Game Last Space
-Last Space is a platformer game.
-This game is created to play in PC and Android. 
 
 Link in youtube: https://www.youtube.com/watch?v=I5WfIFoeCqo&t=693s
 
